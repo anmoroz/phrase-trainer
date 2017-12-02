@@ -1,16 +1,17 @@
 import React from 'react';
 import Axios from 'axios';
 
-import Button from 'material-ui/Button';
-
 import PropTypes from 'prop-types';
+
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
-
 import SwapHorizIcon from 'material-ui-icons/SwapHoriz';
 import IconButton from 'material-ui/IconButton';
+
+import CategorySelect from './CategorySelect';
 
 const styles = theme => ({
     root: {
@@ -30,17 +31,25 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     iconToolbar: {
-        textAlign: 'right',
+        display: 'inline-block',
         height: '100%',
     },
+    pullLeft: {
+        float: 'left'
+    },
+    pullRight: {
+        float: 'right'
+    }
 });
 
 class PhraseTrainerGrid extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
+
         this.state = {
             started: true,
+            selectedCategoryId: 0,
             translationDirection: 'rus-eng',
             translationShow: false,
             phrase: {
@@ -59,6 +68,14 @@ class PhraseTrainerGrid extends React.Component {
                 }
             }
         };
+    }
+
+    handleChangeSelectCategory(event) {
+        this.setState((oldState, props) => {
+            return {selectedCategoryId: event.target.value};
+        }, () => {
+            this.nextPrase()
+        });
     }
 
     componentDidMount() {
@@ -110,7 +127,7 @@ class PhraseTrainerGrid extends React.Component {
             return {translationShow: false};
         });
 
-        Axios.get('/random-phrase')
+        Axios.get('/random-phrase', { params: { category: this.state.selectedCategoryId } })
             .then(function (response) {
                 self.setState((oldState, props) => {
                     //console.log(oldState);
@@ -134,6 +151,10 @@ class PhraseTrainerGrid extends React.Component {
             });
     }
 
+    getCurrentCategoryId() {
+        return this.state.selectedCategoryId
+    }
+
     render() {
         const {classes} = this.props;
         const {started, translationShow} = this.state;
@@ -152,10 +173,25 @@ class PhraseTrainerGrid extends React.Component {
 
                     <Grid className={classes.root}>
                         <Grid container>
-                            <Grid item xs={12} sm={12} className={classes.iconToolbar}>
-                                <IconButton color="default" onClick={() => this.changeDirection()}>
-                                    <SwapHorizIcon />
-                                </IconButton>
+                            <Grid item xs={12} sm={12}>
+
+                                <div className={classes.pullLeft}>
+                                    <CategorySelect
+                                        handleChangeSelectCategory={this.handleChangeSelectCategory.bind(this)}
+                                        getCurrentCategoryId={this.getCurrentCategoryId.bind(this)}
+                                    />
+                                </div>
+                                <div className={classes.pullRight }>
+                                    <div className={classes.iconToolbar}>
+                                        <IconButton
+                                            color="default"
+                                            onClick={() => this.changeDirection()}
+                                            style={{'marginTop': '14px'}}
+                                        >
+                                            <SwapHorizIcon />
+                                        </IconButton>
+                                    </div>
+                                </div>
                             </Grid>
                         </Grid>
 
@@ -195,7 +231,7 @@ class PhraseTrainerGrid extends React.Component {
                         color="primary"
                         className={classes.button}
                         onClick={() => this.nextPrase()}
-                        style={{'color':'white', 'font-weight': 'bold'}}
+                        style={{'color':'white', 'fontWeight': 'bold'}}
                     >
                         Next
                     </Button>

@@ -1,14 +1,8 @@
 ## Trainer new English words and phrases
 
 MySQL
-```
-CREATE TABLE `phrases` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `eng` text,
-  `rus` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-```
+
+Load dump ./mysql/phrase-trainer.sql
 
 Installation
 ```

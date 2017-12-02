@@ -1,6 +1,6 @@
 {
   "name": "phrase-trainer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Trainer new English words and phrases",
   "keywords": [
     "react js",
@@ -16,6 +16,17 @@
   "author": "Morozov Andrey <pavlovsk36@gmail.com>",
   "private": false,
   "license": "ISC",
+  "config": {
+    "port": 8000,
+    "mysql": {
+      "connectionLimit" : 10,
+      "host"     : "localhost",
+      "port"     : 3306,
+      "user"     : "root",
+      "password" : "root",
+      "database" : "phrase-trainer"
+    }
+  },
   "dependencies": {
     "axios": "^0.17.1",
     "material-ui": "^1.0.0-beta.22",

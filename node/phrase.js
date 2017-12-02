@@ -1,28 +1,11 @@
-const mysql = require('mysql');
-
-var connection;
-
-var getDbConnection = function() {
-    if(!connection){
-        connection = mysql.createConnection({
-            host     : 'localhost',
-            user     : 'root',
-            password : 'root',
-            database : 'phrase-trainer'
-        })
-        connection.connect();
-    }
-
-    return connection;
-};
-
+'use strict'
 
 const crud = {
-    getRandom: () => new Promise((resolve, reject) => {
+    getRandom: (connection, parameters) => new Promise((resolve, reject) => {
+        var where = (parameters.category && parseInt(parameters.category) > 0)
+            ? 'where category_id = '+parseInt(parameters.category) : ''
 
-        var connection = getDbConnection();
-
-        connection.query('SELECT rus, eng FROM phrases ORDER BY RAND() LIMIT 1', function (error, results, fields) {
+        connection.query('SELECT rus, eng FROM phrases ' + where + ' ORDER BY RAND() LIMIT 1', function (error, results, fields) {
             if (error) throw error;
 
             return resolve({
@@ -35,15 +18,7 @@ const crud = {
 };
 
 function serv () {
-
     return crud;
-    /*return {
-        phrase: {
-            rus: 'Привет мир!',
-            eng: 'Hello world!',
-            category: 'Have you V3\\ed ?'
-        }
-    }*/
 }
 
 
