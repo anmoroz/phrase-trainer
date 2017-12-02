@@ -1,0 +1,42 @@
+{
+  "name": "phrase-trainer",
+  "version": "1.0.2",
+  "description": "Trainer new English words and phrases",
+  "keywords": [
+    "react js",
+    "node js",
+    "material ui",
+    "mysql"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node node/index.js --presets es2017"
+  },
+  "author": "Morozov Andrey <pavlovsk36@gmail.com>",
+  "private": false,
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "material-ui": "^1.0.0-beta.22",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "mysql": "github:mysqljs/mysql",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2017": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "koa": "^2.4.1",
+    "koa-logger": "^3.1.0",
+    "koa-router": "^7.3.0",
+    "koa-sendfile": "^2.0.0",
+    "koa-static": "^4.0.2",
+    "webpack": "^3.8.1"
+  }
+}
