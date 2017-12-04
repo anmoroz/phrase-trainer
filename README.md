@@ -21,6 +21,10 @@ npm start
 
 ### Screenshots
 
-![Mobile screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/others/mobile_screen.jpg)
+<p align="center">
 
-![Desktop screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/others/desktop_screen.jpg)
+![Mobile screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/other/mobile_screen.jpg)
+
+![Desktop screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/other/desktop_screen.jpg)
+
+<p>
