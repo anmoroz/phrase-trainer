@@ -1,6 +1,6 @@
 {
   "name": "phrase-trainer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Trainer new English words and phrases",
   "keywords": [
     "react js",
@@ -11,6 +11,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack --progress --colors",
+    "build-and-watch": "./node_modules/.bin/webpack --progress --colors --watch",
     "start": "node node/index.js --presets es2017"
   },
   "author": "Morozov Andrey <pavlovsk36@gmail.com>",
@@ -19,12 +21,12 @@
   "config": {
     "port": 8000,
     "mysql": {
-      "connectionLimit" : 10,
-      "host"     : "localhost",
-      "port"     : 3306,
-      "user"     : "root",
-      "password" : "root",
-      "database" : "phrase-trainer"
+      "connectionLimit": 10,
+      "host": "localhost",
+      "port": 3306,
+      "user": "root",
+      "password": "root",
+      "database": "phrase-trainer"
     }
   },
   "dependencies": {
@@ -35,7 +37,8 @@
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "sql": "^0.78.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

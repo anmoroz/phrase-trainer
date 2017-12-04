@@ -37,17 +37,23 @@ app.context.mysqlPool = mysqlPool
 // Router
 
 const router = AppRouter()
-const phraseService = require('./phrase')
-const categoryService = require('./category')
 
-router.get('/random-phrase', async (ctx, next) => {
-    var crud = phraseService()
-    ctx.body = await crud.getRandom(ctx.mysqlPool, ctx.request.query)
+const PhrasesService = require('./services/PhrasesService')
+let phrasesService = new PhrasesService()
+
+router.get('/phrase', async (ctx, next) => {
+    if (ctx.request.query.shuffle === 'true') {
+        ctx.body = await phrasesService.queryRandom(ctx.mysqlPool, ctx.request.query)
+    } else {
+        ctx.body = await phrasesService.queryNext(ctx.mysqlPool, ctx.request.query)
+    }
 });
 
+const CategoryService = require('./services/CategoryService')
+let categoryService = new CategoryService()
+
 router.get('/category', async (ctx, next) => {
-    var crud = categoryService()
-    ctx.body = await crud.getAll(ctx.mysqlPool)
+    ctx.body = await categoryService.getAll(ctx.mysqlPool)
 });
 
 app

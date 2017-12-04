@@ -11,7 +11,7 @@ Installation
 
 Build
 ```
-./node_modules/.bin/webpack
+npm run build
 ```
 
 Start http server

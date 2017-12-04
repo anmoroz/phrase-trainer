@@ -9,6 +9,7 @@ const crud = {
             if (error) throw error;
 
             return resolve({
+                id: results[0].id,
                 rus: results[0].rus,
                 eng: results[0].eng,
                 category: ''

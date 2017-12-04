@@ -9,6 +9,8 @@ import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import SwapHorizIcon from 'material-ui-icons/SwapHoriz';
+import ShuffleIcon from 'material-ui-icons/Shuffle';
+import RepeatIcon from 'material-ui-icons/Repeat';
 import IconButton from 'material-ui/IconButton';
 
 import CategorySelect from './CategorySelect';
@@ -50,9 +52,11 @@ class PhraseTrainerGrid extends React.Component {
         this.state = {
             started: true,
             selectedCategoryId: 0,
+            shuffle: true,
             translationDirection: 'rus-eng',
             translationShow: false,
             phrase: {
+                id: 0,
                 rus: '',
                 eng: '',
                 category: ''
@@ -99,7 +103,7 @@ class PhraseTrainerGrid extends React.Component {
         });
     }
 
-    changeDirection() {
+    changeLanguages() {
         this.setState({
             translationDirection: (this.isEngToRus() ? 'rus-eng' : 'eng-rus'),
             translationShow: false,
@@ -116,6 +120,12 @@ class PhraseTrainerGrid extends React.Component {
         })
     }
 
+    changeShuffle() {
+        this.setState({
+            shuffle: ! this.state.shuffle,
+        })
+    }
+
     isEngToRus() {
         return (this.state.translationDirection == 'eng-rus')
     }
@@ -127,7 +137,11 @@ class PhraseTrainerGrid extends React.Component {
             return {translationShow: false};
         });
 
-        Axios.get('/random-phrase', { params: { category: this.state.selectedCategoryId } })
+        Axios.get('/phrase', { params: {
+            category: this.state.selectedCategoryId,
+            lastId: this.state.phrase.id,
+            shuffle: this.state.shuffle
+        } })
             .then(function (response) {
                 self.setState((oldState, props) => {
                     //console.log(oldState);
@@ -185,7 +199,15 @@ class PhraseTrainerGrid extends React.Component {
                                     <div className={classes.iconToolbar}>
                                         <IconButton
                                             color="default"
-                                            onClick={() => this.changeDirection()}
+                                            title={this.state.shuffle ? "Shuffle all" : "Repeat"}
+                                            onClick={() => this.changeShuffle()}
+                                        >
+                                            {this.state.shuffle ? <ShuffleIcon /> : <RepeatIcon />}
+                                        </IconButton>
+                                        <IconButton
+                                            color="default"
+                                            title="Change languages"
+                                            onClick={() => this.changeLanguages()}
                                             style={{'marginTop': '14px'}}
                                         >
                                             <SwapHorizIcon />
