@@ -1,20 +1,26 @@
-## Trainer new English words and phrases
+## Simple application-trainer new English phrases and words
 
 MySQL
 
-Load dump ./mysql/phrase-trainer.sql
+Load mysql dump ./other/phrase-trainer.sql
 
-Installation
+### Installation
 ```
  npm install
 ```
 
-Build
+### Build
 ```
 npm run build
 ```
 
-Start http server
+### Start http server
 ```
 npm start
 ```
+
+### Screenshots
+
+![Mobile screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/others/mobile_screen.jpg)
+
+![Desktop screenshot](https://raw.github.com/anmoroz/phrase-trainer/master/others/desktop_screen.jpg)
