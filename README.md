@@ -2,7 +2,7 @@
 
 MySQL
 
-Load mysql dump ./other/phrase-trainer.sql
+Load mysql dump ./docker/mysql/phrase-trainer.sql
 
 ### Installation
 ```
@@ -18,6 +18,14 @@ npm run build
 ```
 npm start
 ```
+
+Open http://localhost:8025
+
+### Use docker
+```
+docker-compose up -d --build
+```
+
 
 ### Screenshots
 

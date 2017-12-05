@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+
+  db:
+    user: "1000:50"
+    build: docker/mysql/
+    container_name: db
+    ports:
+        - "3306:3306"
+    volumes:
+        - ./docker/mysql/mysql-docker.cnf:/etc/mysql/conf.d/z99-docker.cnf
+        - ./docker/mysql/data:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: phrase-trainer
+
+  node:
+    build:
+        context: .
+        dockerfile: docker/node/Dockerfile
+    container_name: node
+    ports:
+        - "8025:8025"
+    links:
+        - db:db
+
+volumes:
+  mysqldata:
+    driver: local

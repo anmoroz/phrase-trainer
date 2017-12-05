@@ -19,7 +19,7 @@
   "private": false,
   "license": "ISC",
   "config": {
-    "port": 8000,
+    "port": 8025,
     "mysql": {
       "connectionLimit": 10,
       "host": "localhost",
