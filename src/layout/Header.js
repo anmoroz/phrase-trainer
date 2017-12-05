@@ -25,7 +25,7 @@ function ButtonAppBar(props) {
                 <Toolbar>
                     <div className={classes.wrapper}>
                         <Typography type="title" color="inherit" className={classes.flex}>
-                            Phrase trainer v. 1.0
+                            Phrase trainer <small>v</small>1.1
                         </Typography>
                     </div>
                 </Toolbar>

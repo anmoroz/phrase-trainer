@@ -8,9 +8,12 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
+import Badge from 'material-ui/Badge';
 import SwapHorizIcon from 'material-ui-icons/SwapHoriz';
 import ShuffleIcon from 'material-ui-icons/Shuffle';
 import RepeatIcon from 'material-ui-icons/Repeat';
+import TimerIcon from 'material-ui-icons/Timer';
+import TimerOffIcon from 'material-ui-icons/TimerOff';
 import IconButton from 'material-ui/IconButton';
 
 import CategorySelect from './CategorySelect';
@@ -41,19 +44,28 @@ const styles = theme => ({
     },
     pullRight: {
         float: 'right'
-    }
+    },
+    badge: {
+        margin: `0 ${theme.spacing.unit * 2}px`,
+    },
 });
+
+const TIMER_SEC = 10
 
 class PhraseTrainerGrid extends React.Component {
 
     constructor(props) {
         super(props)
 
+        this.timer = 0
+
         this.state = {
             started: true,
             selectedCategoryId: 0,
             shuffle: true,
             translationDirection: 'rus-eng',
+            timer: false,
+            timerSeconds: TIMER_SEC,
             translationShow: false,
             phrase: {
                 id: 0,
@@ -126,6 +138,45 @@ class PhraseTrainerGrid extends React.Component {
         })
     }
 
+    startTimer() {
+        if (this.timer !== 0) {
+            return
+        }
+
+        var self = this;
+        this.timer = setInterval(() => {
+            let seconds = this.state.timerSeconds - 1;
+            this.setState({
+                timerSeconds: seconds >= 0 ? seconds : 0
+            });
+            if (seconds === 0) {
+                self.nextPrase();
+            } else if (seconds === 4) {
+                self.showTranslation()
+            }
+        }, 1000);
+    }
+
+    changeTimer() {
+        this.setState({
+            timer: ! this.state.timer,
+        }, () => {
+            if (this.state.timer) {
+                this.startTimer()
+            } else {
+                this.clearTimer()
+            }
+        })
+    }
+
+    clearTimer() {
+        clearInterval(this.timer)
+        this.timer = 0
+        this.setState({
+            timerSeconds: TIMER_SEC,
+        })
+    }
+
     isEngToRus() {
         return (this.state.translationDirection == 'eng-rus')
     }
@@ -144,9 +195,9 @@ class PhraseTrainerGrid extends React.Component {
         } })
             .then(function (response) {
                 self.setState((oldState, props) => {
-                    //console.log(oldState);
                     return {
                         phrase: response.data,
+                        timerSeconds: TIMER_SEC,
                         block: {
                             left: {
                                 title: oldState.block.left.title,
@@ -159,6 +210,7 @@ class PhraseTrainerGrid extends React.Component {
                         }
                     };
                 });
+
             })
             .catch(function (error) {
                 console.log(error);
@@ -197,6 +249,23 @@ class PhraseTrainerGrid extends React.Component {
                                 </div>
                                 <div className={classes.pullRight }>
                                     <div className={classes.iconToolbar}>
+                                        <IconButton
+                                            color="default"
+                                            title={this.state.timer ? "Timer On" : "Timer Off"}
+                                            onClick={() => this.changeTimer()}
+                                        >
+                                            {this.state.timer
+                                                ? <Badge
+                                                    className={classes.badge}
+                                                    badgeContent={this.state.timer ? <span style={{'color':'white'}}>{this.state.timerSeconds}</span> : ''}
+                                                    color="primary"
+                                                >
+                                                    <TimerIcon />
+                                                </Badge>
+                                                : <TimerOffIcon />}
+
+
+                                        </IconButton>
                                         <IconButton
                                             color="default"
                                             title={this.state.shuffle ? "Shuffle all" : "Repeat"}
