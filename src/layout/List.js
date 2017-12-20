@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { withStyles } from 'material-ui/styles';
 
-import PhraseTrainer from '../components/PhraseTrainer';
+import ItemsList from '../components/ItemsList';
 
 const styles = theme => ({
     contentwrapper: {
@@ -16,7 +16,7 @@ function Main(props) {
     const { classes } = props;
     return (
         <div className={classes.contentwrapper}>
-            <PhraseTrainer />
+            <ItemsList />
         </div>
     )
 }

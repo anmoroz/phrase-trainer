@@ -49,6 +49,10 @@ router.get('/phrase', async (ctx, next) => {
     }
 });
 
+router.get('/phrases', async (ctx, next) => {
+    ctx.body = await phrasesService.all(ctx.mysqlPool, ctx.request.query)
+});
+
 const CategoryService = require('./services/CategoryService')
 let categoryService = new CategoryService()
 
@@ -56,10 +60,13 @@ router.get('/category', async (ctx, next) => {
     ctx.body = await categoryService.getAll(ctx.mysqlPool)
 });
 
+router.redirect('/list', '/')
+
 app
     .use(router.routes())
     .use(router.allowedMethods())
     .use(AppStatic('./public'))
+    .use(AppStatic('./node_modules'))
     .listen(config.port, function () {
         console.log('app listening on port: %d', config.port)
     })
